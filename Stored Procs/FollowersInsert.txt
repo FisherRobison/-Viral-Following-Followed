@@ -1,0 +1,28 @@
+CREATE PROC	 [dbo].[Followers_Insert]
+
+
+@FollowerId nvarchar(128),
+@FollowedId nvarchar(128),
+@Id int OUTPUT
+
+AS
+BEGIN
+
+INSERT INTO [dbo].[Followers]
+			(
+             [Created]
+            ,[FollowerId]
+            ,[FollowedId]
+		     )
+
+     VALUES (GETUTCDATE(),@FollowerId,@FollowedId)
+     
+	 EXEC [dbo].[User_FollowerCounts] @FollowedId
+	
+	 EXEC [dbo].[User_FollowerCounts] @FollowerId
+	
+	SET  @Id = SCOPE_IDENTITY()
+	
+
+
+END
