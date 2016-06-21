@@ -1,0 +1,18 @@
+GO
+ALTER PROC [dbo].[Followers_Unfollow]
+			
+			@FollowerId nvarchar(128),
+			@FollowedId nvarchar(128)
+AS
+
+BEGIN
+
+DELETE FROM [dbo].[Followers]
+		WHERE FollowerId=@FollowerId AND FollowedId = @FollowedId
+
+
+	EXEC [dbo].[User_FollowerCounts] @FollowedId
+	
+	EXEC [dbo].[User_FollowerCounts] @FollowerId
+
+END

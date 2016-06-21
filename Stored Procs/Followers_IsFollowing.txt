@@ -1,0 +1,19 @@
+GO
+
+ALTER Procedure [dbo].[Followers_IsFollowing]
+(
+@FollowerId nvarchar(128),
+@FollowedId nvarchar(128)
+)
+AS
+	SELECT CASE WHEN EXISTS (
+    SELECT
+			[FollowerId]
+			,[FollowedId]
+
+    FROM [dbo].[Followers]
+  Where FollowerId=@FollowerId AND FollowedId = @FollowedId
+)
+THEN CAST(1 AS BIT)
+ELSE CAST(0 AS BIT) 
+END
